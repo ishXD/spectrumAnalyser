@@ -3,14 +3,11 @@
 #include <U8g2lib.h>
 #include <arduinoFFT.h>
 
-// comment this to save some memory:
-#define USE_32BIT_SAMPLING
-
-// attach a LED to GPIO 17
+//LED to GPIO 17
 #define LED_PIN GPIO_NUM_17
 #define DEBUG_PIN GPIO_NUM_16
 
-#define SAMPLE_BUFFER_SIZE 512  // Number of samples
+#define SAMPLE_BUFFER_SIZE 512  // has to be power of 2
 
 //Create FFT object
 ArduinoFFT<double> FFT = ArduinoFFT<double>();
@@ -32,9 +29,8 @@ double maxWave = 0.0;  // to compute scaling factor for wave display
 void setup()
 {
   pinMode(DEBUG_PIN, OUTPUT);   // for execution time measurement
-  pinMode(LED_PIN, OUTPUT);     // LED
+  pinMode(LED_PIN, OUTPUT);     
 
-  // Wire.setClock(400000);     // this has no effect
   Serial.begin(115200);
 
   initMicrophone();
@@ -46,7 +42,7 @@ void setup()
 
 void loop()
 {
-  // Read waveform (5ms)
+  // Read waveform
   digitalWrite(DEBUG_PIN, HIGH);
   digitalWrite(LED_PIN, HIGH);         // LED lights during sampling
 
